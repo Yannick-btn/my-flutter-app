@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
           // most commun method are : push and pop
           // push will add a new screen on the top of the ui
           // pop will naviguate backward in history by removing that screen from the top
-          onPressed: () => Navigator.pushNamed(context, '/post'),
+          onPressed: () => Navigator.pushNamed(context, '/chat'),
         ),
       ),
     );

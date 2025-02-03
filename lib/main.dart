@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutterapp/theme.dart';
 import 'package:flutterapp/shared/bottom_nav.dart';
+import 'package:flutterapp/Routes.dart';
+import 'package:flutterapp/home/home.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,9 +34,9 @@ class _AppState extends State<App> {
 
         if (snapshot.connectionState == ConnectionState.done) {
           return MaterialApp(
-            //routes: appRoutes,
+            routes: appRoutes,
             theme: appTheme,
-            home: BottomNavBar(),
+            //home: const HomeScreen(),
           );
         }
 
