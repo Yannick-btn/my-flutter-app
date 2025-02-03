@@ -1,0 +1,96 @@
+class BottomNavBar extends StatelessWidget {
+  const BottomNavBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(
+            FontAwesomeIcons.envelope,
+            size: 20,
+          ),
+          label: 'Topics',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            FontAwesomeIcons.comment,
+            size: 20,
+          ),
+          label: 'chat',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            FontAwesomeIcons.user,
+            size: 20,
+          ),
+          label: 'profile',
+        ),
+      ],
+      fixedColor: Colors.deepPurple[200],
+      onTap: (int idx) {
+        switch (idx) {
+          case 0:
+            Navigator.pushNamed(context, '/post');
+            break;
+          case 1:
+            Navigator.pushNamed(context, '/chat');
+            break;
+          case 2:
+            Navigator.pushNamed(context, '/profile');
+        }
+      },
+    );
+  }
+}
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutterapp/post/post.dart';
+import 'package:flutterapp/chatting/chatting.dart';
+import 'package:flutterapp/profile/profile.dart';
+
+class BottomNavBar extends StatefulWidget {
+  const BottomNavBar({super.key});
+
+  @override
+  State<BottomNavBar> createState() => _BottomNavBarState();
+}
+
+class _BottomNavBarState extends State<BottomNavBar> {
+  int pageIndex = 0;
+
+  List<Widget> pages = [
+    PostScreen(),
+    ChattingScreen(),
+    ProfileScreen(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    // Wrap the setState call inside a method that ensures the widget is mounted.
+    // It prevents calling setState if the widget is no longer part of the tree.
+    return Scaffold(
+      body: IndexedStack(
+        index: pageIndex,
+        children: pages,
+      ),
+      bottomNavigationBar: AnimatedBottomNavigationBar(
+        icons: [
+          FontAwesomeIcons.envelope,
+          FontAwesomeIcons.comment,
+          FontAwesomeIcons.user,
+        ],
+        activeIndex: pageIndex,
+        onTap: (index) {
+          if (mounted) {
+            setState(() {
+              pageIndex = index;
+            });
+          }
+        },
+      ),
+    );
+  }
+}
