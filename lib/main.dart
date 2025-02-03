@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutterapp/Routes.dart';
 import 'package:flutterapp/theme.dart';
 import 'package:flutterapp/shared/bottom_nav.dart';
 
