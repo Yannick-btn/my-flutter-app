@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/login/login.dart';
-import 'package:flutterapp/post/post.dart';
 import 'package:flutterapp/services/auth.dart';
 import 'package:flutterapp/shared/nav_bar_wrapper.dart';
 

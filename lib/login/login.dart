@@ -14,7 +14,7 @@ class LoginScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            const FlutterLogo(size: 150),
+            const FaIcon(FontAwesomeIcons.userLock, size: 150),
             Flexible(
               child: LoginButton(
                 icon: FontAwesomeIcons.userNinja,
@@ -23,6 +23,11 @@ class LoginScreen extends StatelessWidget {
                 color: Colors.deepPurple,
               ),
             ),
+            LoginButton(
+                text: 'Sign in with google',
+                icon: FontAwesomeIcons.google,
+                color: Colors.lightBlue,
+                loginMethod: AuthService().googleLogin)
           ],
         ),
       ),
