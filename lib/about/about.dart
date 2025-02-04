@@ -7,7 +7,6 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // AppBar has a built in back button
       appBar: AppBar(),
     );
   }

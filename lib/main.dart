@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutterapp/theme.dart';
 import 'package:flutterapp/shared/bottom_nav.dart';
 import 'package:flutterapp/Routes.dart';
@@ -27,12 +28,13 @@ class _AppState extends State<App> {
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Directionality(
-            textDirection: TextDirection.ltr, // or TextDirection.rtl if needed
+            textDirection: TextDirection.ltr,
             child: Text('error'),
           );
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
+          FirebaseAuth.instance.setLanguageCode('fr');
           return MaterialApp(
             routes: appRoutes,
             theme: appTheme,
@@ -41,7 +43,7 @@ class _AppState extends State<App> {
         }
 
         return Directionality(
-          textDirection: TextDirection.ltr, // or TextDirection.rtl if needed
+          textDirection: TextDirection.ltr,
           child: Text('loading'),
         );
       },
