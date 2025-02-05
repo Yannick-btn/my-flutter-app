@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -20,6 +21,8 @@ class AuthService {
 
   Future<void> singOut() async {
     await FirebaseAuth.instance.signOut();
+
+    await GoogleSignIn().disconnect();
   }
 
   // Google login
@@ -31,14 +34,29 @@ class AuthService {
 
       final googleAuth = await googleUser.authentication;
 
-      final AuthCredential = GoogleAuthProvider.credential(
+      final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
-      await FirebaseAuth.instance.signInWithCredential(AuthCredential);
+      // Sign in user with credential
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+
+      // Save user data to Firestore
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .set(
+              {
+            'uid': userCredential.user!.uid,
+            'email': userCredential.user!.email,
+          },
+              SetOptions(
+                  merge:
+                      true)); // Merge pour éviter d'écraser les données existantes
     } on FirebaseAuthException catch (e) {
-      // handle error
+      print('Erreur de connexion Google: ${e.message}');
     }
   }
 }
