@@ -59,4 +59,6 @@ class AuthService {
       print('Erreur de connexion Google: ${e.message}');
     }
   }
+
+  getCurrentUser() {}
 }

@@ -17,7 +17,7 @@ class ChattingScreen extends StatelessWidget {
       appBar: AppBar(title: Text("Chat Room")),
       body: Column(
         children: [
-          Expanded(child: _buildUserList()), // 🔥 Ajouté ici !
+          Expanded(child: _buildUserList()),
         ],
       ),
     );
@@ -50,6 +50,7 @@ class ChattingScreen extends StatelessWidget {
   Widget _buildUserListItem(
       Map<String, dynamic> userData, BuildContext context) {
     // display all users exept current user
+
     return UserTile(
       text: userData["email"],
       onTap: () {
@@ -59,6 +60,7 @@ class ChattingScreen extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => ChatPage(
                 receiverEmail: userData["email"],
+                receiverID: userData["uid"],
               ),
             ));
       },
