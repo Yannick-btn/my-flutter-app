@@ -8,14 +8,17 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: const Text('Profile'),
       ),
-      body: ElevatedButton(
-        child: Text('signout'),
-        onPressed: () async {
-          await AuthService().singOut();
-          Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
-        },
+      body: Center(
+        child: ElevatedButton(
+          child: const Text('Sign Out'),
+          onPressed: () async {
+            await AuthService().signOut(); // Correction ici
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil('/', (route) => false);
+          },
+        ),
       ),
     );
   }

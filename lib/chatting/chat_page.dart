@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterapp/services/auth.dart';
 import 'package:flutterapp/services/chat.dart';
 import 'package:flutterapp/shared/textfield.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ChatPage extends StatelessWidget {
   final String receiverEmail;
@@ -20,10 +21,7 @@ class ChatPage extends StatelessWidget {
   // send message
   void sendMessage() async {
     if (_messageController.text.isNotEmpty) {
-      // send message
       await _chatService.sendMessage(receiverID, _messageController.text);
-
-      // clear text controller
       _messageController.clear();
     }
   }
@@ -36,59 +34,58 @@ class ChatPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          // display all messages
           Expanded(
             child: _buildMessageList(),
           ),
-
-          //user input
           _buildUserInput(),
         ],
       ),
     );
   }
 
-  // build message list
   Widget _buildMessageList() {
-    String? senderID = _authService.getCurrentUser()?.uid;
-    if (senderID == null) {
-      // Gérer l'erreur ou rediriger l'utilisateur vers la page de connexion
-      return const Text('Utilisateur non authentifié');
+    final User? currentUser = _authService.getCurrentUser();
+
+    if (currentUser == null) {
+      return const Center(child: Text('Utilisateur non connecté'));
     }
-    return StreamBuilder(
-      stream: _chatService.getMessages(receiverID, senderID),
+
+    String senderID = currentUser.uid;
+    Stream<QuerySnapshot> messagesStream =
+        _chatService.getMessages(senderID, receiverID);
+
+    return StreamBuilder<QuerySnapshot>(
+      stream: messagesStream,
       builder: (context, snapshot) {
-        // error
         if (snapshot.hasError) {
-          return const Text('error');
+          return const Text('Erreur de chargement des messages');
         }
-        // loading
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Text('Loading...');
+          return const Text('Chargement...');
         }
-        // return list view
+        if (snapshot.data!.docs.isEmpty) {
+          return const Text('Aucun message disponible');
+        }
+
         return ListView(
-          children: (snapshot.data! as QuerySnapshot)
-              .docs
-              .map((doc) => _buildMessageItem(doc))
-              .toList(),
+          children:
+              snapshot.data!.docs.map((doc) => _buildMessageItem(doc)).toList(),
         );
       },
     );
   }
 
-  // build messsage item
   Widget _buildMessageItem(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-
-    return Text(data['message']);
+    return ListTile(
+      title: Text(data['message']),
+      subtitle: Text('De: ${data['senderEmail']}'),
+    );
   }
 
-  // build message input
   Widget _buildUserInput() {
     return Row(
       children: [
-        // textfield should take up most of the space
         Expanded(
           child: MyTextField(
             controller: _messageController,
@@ -96,11 +93,9 @@ class ChatPage extends StatelessWidget {
             obscureText: false,
           ),
         ),
-
-        // send button
         IconButton(
           onPressed: sendMessage,
-          icon: const Icon(Icons.arrow_upward),
+          icon: const Icon(Icons.send),
         ),
       ],
     );

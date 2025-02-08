@@ -29,32 +29,29 @@ class ChattingScreen extends StatelessWidget {
       builder: (context, snapshot) {
         // error
         if (snapshot.hasError) {
-          return const Text('Error');
+          return const Text('Erreur de chargement');
         }
         // loading
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Text('Loading...');
+          return const Text('Chargement...');
         }
         return ListView(
           children: (snapshot.data as List<Map<String, dynamic>>)
               .map<Widget>((userData) => _buildUserListItem(userData, context))
               .toList(),
         );
-
-        //return list views
       },
     );
   }
 
-  // build individual list title for user
+  // build individual list tile for user
   Widget _buildUserListItem(
       Map<String, dynamic> userData, BuildContext context) {
-    // display all users exept current user
-
+    // display all users except current user
     return UserTile(
       text: userData["email"],
       onTap: () {
-        // tape on user = go to chat
+        // tap on user = go to chat
         Navigator.push(
             context,
             MaterialPageRoute(
