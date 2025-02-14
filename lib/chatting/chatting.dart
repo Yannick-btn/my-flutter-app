@@ -17,7 +17,9 @@ class ChattingScreen extends StatelessWidget {
       appBar: AppBar(title: Text("Chat Room")),
       body: Column(
         children: [
-          Expanded(child: _buildUserList()),
+          Expanded(
+            child: _buildUserList(),
+          ),
         ],
       ),
     );
