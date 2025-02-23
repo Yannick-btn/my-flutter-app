@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutterapp/services/auth.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -12,22 +13,47 @@ class LoginScreen extends StatelessWidget {
         padding: const EdgeInsets.all(30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const FaIcon(FontAwesomeIcons.userLock, size: 150),
-            Flexible(
-              child: LoginButton(
-                icon: FontAwesomeIcons.userNinja,
-                text: 'Continue as Guest',
-                loginMethod: AuthService().anonLogin,
-                color: Theme.of(context).colorScheme.primary,
-              ),
+            Column(
+              mainAxisSize: MainAxisSize.min, // Évite l’espace entre les textes
+              children: [
+                Text(
+                  'Nex.',
+                  style: GoogleFonts.leagueSpartan(
+                    color: Theme.of(context).colorScheme.tertiary,
+                    fontSize: 150.0,
+                    fontWeight: FontWeight.bold,
+                    height: 0.8,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  'The Nex. Generation',
+                  style: GoogleFonts.leagueSpartan(
+                    color: Theme.of(context).colorScheme.tertiary,
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold,
+                    height: 0.8,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
+            const SizedBox(height: 100), // Espace avant les boutons
             LoginButton(
-                text: 'Sign in with google',
-                icon: FontAwesomeIcons.google,
-                color: Colors.lightBlue,
-                loginMethod: AuthService().googleLogin)
+              icon: FontAwesomeIcons.userNinja,
+              text: 'Continue as Guest',
+              loginMethod: AuthService().anonLogin,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            const SizedBox(height: 80), // Espace entre les boutons
+            LoginButton(
+              text: 'Sign in with Google',
+              icon: FontAwesomeIcons.google,
+              color: Colors.lightBlue,
+              loginMethod: AuthService().googleLogin,
+            ),
           ],
         ),
       ),
@@ -39,7 +65,7 @@ class LoginButton extends StatelessWidget {
   final Color color;
   final IconData icon;
   final String text;
-  final Function loginMethod;
+  final VoidCallback loginMethod;
 
   const LoginButton({
     required this.text,
@@ -67,7 +93,7 @@ class LoginButton extends StatelessWidget {
           padding: const EdgeInsets.all(24),
           backgroundColor: color,
         ),
-        onPressed: () => loginMethod(),
+        onPressed: loginMethod,
       ),
     );
   }
