@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ChatBubble extends StatelessWidget {
   final String message;
@@ -28,7 +29,7 @@ class ChatBubble extends StatelessWidget {
         ),
         child: Text(
           message,
-          style: TextStyle(
+          style: GoogleFonts.robotoMono(
             color: Theme.of(context).colorScheme.tertiary,
           ),
         ),

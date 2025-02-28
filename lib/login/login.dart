@@ -16,7 +16,7 @@ class LoginScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Column(
-              mainAxisSize: MainAxisSize.min, // Évite l’espace entre les textes
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   'Nex.',

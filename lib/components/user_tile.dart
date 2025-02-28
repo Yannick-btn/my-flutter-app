@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class UserTile extends StatelessWidget {
   final String text;
+  final IconData leadingIcon;
   final void Function()? onTap;
   const UserTile({
     super.key,
     required this.text,
+    required this.leadingIcon,
     required this.onTap,
   });
 
@@ -29,16 +32,16 @@ class UserTile extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(16.0),
               ),
-              // icon
-              Icon(Icons.person),
+              // icon dynamique
+              Icon(leadingIcon),
               SizedBox(width: 8), // Ajout d'un espace entre l'icône et le texte
               // user name
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 20.0),
                 child: Text(
                   text,
-                  style:
-                      TextStyle(color: Theme.of(context).colorScheme.tertiary),
+                  style: GoogleFonts.robotoMono(
+                      color: Theme.of(context).colorScheme.tertiary),
                 ),
               ),
               const Spacer(),

@@ -51,7 +51,8 @@ class ChattingScreen extends StatelessWidget {
       Map<String, dynamic> userData, BuildContext context) {
     // display all users except current user
     return UserTile(
-      text: userData["email"],
+      text: userData["displayName"],
+      leadingIcon: Icons.person,
       onTap: () {
         // tap on user = go to chat
         Navigator.push(
@@ -60,6 +61,7 @@ class ChattingScreen extends StatelessWidget {
               builder: (context) => ChatPage(
                 receiverEmail: userData["email"],
                 receiverID: userData["uid"],
+                receiverName: userData["displayName"],
               ),
             ));
       },

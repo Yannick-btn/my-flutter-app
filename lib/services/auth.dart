@@ -39,6 +39,7 @@ class AuthService {
           .set({
         'uid': userCredential.user!.uid,
         'email': userCredential.user!.email,
+        'displayName': userCredential.user!.displayName ?? '',
       }, SetOptions(merge: true));
     } on FirebaseAuthException catch (e) {
       print('Erreur de connexion Google: ${e.message}');

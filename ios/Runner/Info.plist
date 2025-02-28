@@ -45,5 +45,21 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	
+	<!-- Google Sign-In and Firebase Configuration -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.4812568729-p43rr1u2edj8keka2bpomh5v7qsen1n8</string>
+			</array>
+		</dict>
+	</array>
+
+	<!-- Firebase configuration file -->
+	<key>GoogleService-Info</key>
+	<string>GoogleService-Info.plist</string>
+
 </dict>
 </plist>
