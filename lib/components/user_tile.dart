@@ -33,7 +33,10 @@ class UserTile extends StatelessWidget {
                 padding: EdgeInsets.all(16.0),
               ),
               // icon dynamique
-              Icon(leadingIcon),
+              Icon(
+                leadingIcon,
+                color: Theme.of(context).colorScheme.primary,
+              ),
               SizedBox(width: 8), // Ajout d'un espace entre l'icône et le texte
               // user name
               Padding(
